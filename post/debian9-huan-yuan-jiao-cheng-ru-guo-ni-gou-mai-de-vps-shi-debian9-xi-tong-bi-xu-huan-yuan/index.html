@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>debian9换源教程——如果你购买的VPS是debian9系统必须换源！！！ | sjhblog</title>
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://blog.19881011.xyz/favicon.ico?v=1753969993628">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://blog.19881011.xyz/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://blog.19881011.xyz">
+        <img class="avatar" src="https://blog.19881011.xyz/images/avatar.png?v=1753969993628" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://blog.19881011.xyz">
+        <h1 class="site-title">sjhblog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">debian9换源教程——如果你购买的VPS是debian9系统必须换源！！！</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2024-12-27</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://blog.19881011.xyz/tag/xqJsYIbhwR/">
+                    Linux系统教程
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p>一、VPS厂商的方法：<br>
+debian9 需要换源</p>
+<p>先运行一键换源命令（复制回车即可）</p>
+<p>#替换为官方源（注意版本）<br>
+wget -O /etc/apt/sources.list https://static.lty.fun/%E5%85%B6%E4%BB%96%E8%B5%84%E6%BA%90/SourcesList/Debian-9-archive.list</p>
+<p>#替换为腾讯源（注意版本）<br>
+wget -O /etc/apt/sources.list https://static.lty.fun/%E5%85%B6%E4%BB%96%E8%B5%84%E6%BA%90/SourcesList/Debian-9-archive-qcloud.list</p>
+<p>先运行上面的命令，任选一个运行即可，运行后再运行下方命令完成换源<br>
+apt-get update -y &amp;&amp; apt-get install curl -y &amp;&amp; apt-get install sudo -y</p>
+<p>添加swap交换<br>
+curl -L https://raw.githubusercontent.com/spiritLHLS/addswap/main/addswap.sh -o addswap.sh &amp;&amp; chmod +x addswap.sh &amp;&amp; bash addswap.sh</p>
+<p>二、网上搜索的方法：<br>
+由于debian9 停止维护，目前可用的软件源如下：</p>
+<p>deb http://archive.debian.org/debian/ stretch main contrib non-free</p>
+<p>deb-src http://archive.debian.org/debian/ stretch main contrib non-free</p>
+<p>deb http://archive.debian.org/debian-security/ stretch/updates main contrib non-free</p>
+<p>deb-src http://archive.debian.org/debian-security/ stretch/updates main contrib non-free</p>
+<p>deb http://archive.debian.org/debian/ stretch-backports main contrib non-free</p>
+<p>1.设置软件源</p>
+<p>cat &gt;/etc/apt/sources.list&lt;</p>
+<p>2.更新软件源：apt update -y</p>
+<p>3.提示gpg证书错误处理</p>
+<p>报错信息：</p>
+<p>W: GPG error: http://archive.debian.org/debian stretch-backports InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 648ACFD622F3D138 NO_PUBKEY 0E98404D386FA1D9</p>
+<p>安装需要的依赖和软件：</p>
+<p>apt-get install software-properties-common dirmngr -y</p>
+<p>添加gpg证书验证：</p>
+<p>apt-key adv --keyserver keyserver.ubuntu.com --recv-keysapt-key adv --keyserver keyserver.ubuntu.com --recv-keys 648ACFD622F3D138 0E98404D386FA1D9</p>
+<p>4.再次执行更新软件源：apt update -y</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://blog.19881011.xyz/post/di-yi-pian-wen-zhang-20241221/">
+              <h3 class="post-title">
+                下一篇：第一篇文章20241221
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">温故而知新</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://blog.19881011.xyz/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
